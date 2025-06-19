@@ -1,8 +1,8 @@
 package com.cvckcorp.backend_quanto_ta.controller;
 
-import com.cvckcorp.backend_quanto_ta.domain.dto.NfceProdutoResponseDto;
+import com.cvckcorp.backend_quanto_ta.domain.dto.NfceCompanyResponseDto;
+import com.cvckcorp.backend_quanto_ta.domain.dto.NfceProductResponseDto;
 import com.cvckcorp.backend_quanto_ta.domain.dto.NfceRequestDto;
-import com.cvckcorp.backend_quanto_ta.domain.dto.NfceEmitenteResponseDto;
 import com.cvckcorp.backend_quanto_ta.domain.dto.NfceResponseDto;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -21,37 +21,35 @@ import java.util.*;
 public class NfceController {
     @PostMapping("/read-nfce-link")
     public ResponseEntity<NfceResponseDto> readNfceLink(@RequestBody NfceRequestDto nfceRequestDto) {
+
         try {
             RestTemplate restTemplate = new RestTemplate();
             ResponseEntity<String> result = restTemplate.getForEntity(nfceRequestDto.url(), String.class);
-            System.out.println("RESULTADO: " + result);
             Document doc = Jsoup.parse(String.valueOf(result), "", Parser.xmlParser());
-            NfceEmitenteResponseDto emitente = null;
-            List<NfceProdutoResponseDto> produto = new ArrayList<>();
-            NfceResponseDto resultado = null;
-            System.out.println(doc);
+
+            NfceCompanyResponseDto company = null;
+            List<NfceProductResponseDto> product = new ArrayList<>();
+            NfceResponseDto responseDto = null;
+
             for(Element e : doc.select("emit")) {
-                emitente = new NfceEmitenteResponseDto(
+                company = new NfceCompanyResponseDto(
                         e.getElementsByTag("CNPJ").text(),
-                        e.getElementsByTag("xNome").text(),
                         e.getElementsByTag("xFant").text(),
                         e.select("enderEmit > xLgr").text(),
                         e.select("enderEmit > nro").text()
                 );
-                System.out.println("Emitente: " + emitente);
             }
 
             for(Element e : doc.getElementsByTag("det")) {
-                var prod = new NfceProdutoResponseDto(e.getElementsByTag("cProd").text(), e.getElementsByTag("xProd").text(),
+                var products = new NfceProductResponseDto(e.getElementsByTag("cProd").text(), e.getElementsByTag("xProd").text(),
                                                       e.getElementsByTag("uCom").text(), e.getElementsByTag("qCom").text(),
                                                       e.getElementsByTag("vProd").text());
-                produto.add(prod);
-                System.out.println("PRODUTO: " + produto);
+                product.add(products);
             }
 
-            resultado = new NfceResponseDto(emitente, produto);
+            responseDto = new NfceResponseDto(company, product);
 
-            return ResponseEntity.status(HttpStatus.OK).body(resultado);
+            return ResponseEntity.status(HttpStatus.OK).body(responseDto);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
