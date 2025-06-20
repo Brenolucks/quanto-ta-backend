@@ -1,0 +1,8 @@
+CREATE TABLE tb_product (
+ id SERIAL PRIMARY KEY,
+ code VARCHAR(20) NOT NULL,
+ name VARCHAR(20) NOT NULL,
+ unit VARCHAR(5) NOT NULL,
+ amount NUMERIC(4,4) NOT NULL,
+ price NUMERIC(4,4) NOT NULL
+);
