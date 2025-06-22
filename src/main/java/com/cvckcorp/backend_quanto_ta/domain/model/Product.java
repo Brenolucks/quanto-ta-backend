@@ -3,7 +3,6 @@ package com.cvckcorp.backend_quanto_ta.domain.model;
 import jakarta.persistence.*;
 import lombok.*;
 
-
 @Data
 @NoArgsConstructor
 @AllArgsConstructor

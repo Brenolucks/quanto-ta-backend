@@ -13,8 +13,9 @@ public class CompanyServiceImpl implements CompanyService {
         for(Element e : document.select("emit")) {
              company = new NfceCompanyResponseDto(
                     e.getElementsByTag("CNPJ").text(),
-                    e.getElementsByTag("xFant").text(),
-                    e.select("enderEmit > xLgr").text(),
+                     e.getElementsByTag("xNome").text(),
+                     e.getElementsByTag("xFant").text(),
+                     e.select("enderEmit > xLgr").text(),
                     e.select("enderEmit > nro").text()
             );
         }

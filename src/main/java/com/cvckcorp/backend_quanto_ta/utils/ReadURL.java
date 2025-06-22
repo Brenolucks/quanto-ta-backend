@@ -9,10 +9,15 @@ import org.springframework.web.client.RestTemplate;
 
 @Component
 public class ReadURL {
-    public Document ReadUrlFromLink(String url) {
+    public Document ReadUrlFromLink(String defaultURL) {
         RestTemplate restTemplate = new RestTemplate();
-        ResponseEntity<String> result = restTemplate.getForEntity(url, String.class);
+        var newURL = "";
 
-        return Jsoup.parse(String.valueOf(result), "", Parser.xmlParser());
+        if(defaultURL.startsWith("http:")) newURL = defaultURL.replace("http", "https");
+        var URL = newURL.isEmpty() ? defaultURL : newURL;
+
+        ResponseEntity<String> xml = restTemplate.getForEntity(URL, String.class);
+
+        return Jsoup.parse(String.valueOf(xml), "", Parser.xmlParser());
     }
 }
