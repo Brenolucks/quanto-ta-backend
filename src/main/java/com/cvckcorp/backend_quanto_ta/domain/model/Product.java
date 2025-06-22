@@ -17,4 +17,7 @@ public class Product {
     private String unit;
     private double amount;
     private double price;
+    @ManyToOne
+    @JoinColumn(name = "company_id", nullable = false)
+    private Company company;
 }

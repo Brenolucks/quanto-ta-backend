@@ -1,0 +1,2 @@
+ALTER TABLE tb_company
+ADD COLUMN fantasia VARCHAR(255) NOT NULL;

@@ -5,6 +5,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -15,7 +17,10 @@ public class Company {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     private String name;
+    private String fantasia;
     private String cnpj;
     private String address;
     private int number;
+    @OneToMany(mappedBy = "company", fetch = FetchType.LAZY)
+    private List<Product> products;
 }

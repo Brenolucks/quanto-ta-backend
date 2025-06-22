@@ -1,5 +1,6 @@
 package com.cvckcorp.backend_quanto_ta.service.nfce;
 
+import com.cvckcorp.backend_quanto_ta.domain.dto.NfceRequestDto;
 import com.cvckcorp.backend_quanto_ta.domain.dto.NfceResponseDto;
 import com.cvckcorp.backend_quanto_ta.service.company.CompanyServiceImpl;
 import com.cvckcorp.backend_quanto_ta.service.product.ProductServiceImpl;
@@ -22,5 +23,13 @@ public class NfceReadServiceImpl implements NfceReadService {
         var product = productService.getProductFields(document);
 
         return new NfceResponseDto(company, product);
+    }
+
+    @Override
+    public String registerNfce(NfceRequestDto nfceRequestDto) {
+        var company = companyService.saveCompany(nfceRequestDto.nfceCompanyRequestDto());
+        var product = productService.saveProducts(nfceRequestDto.nfceProductRequestDto());
+
+        return "Save with success!";
     }
 }
