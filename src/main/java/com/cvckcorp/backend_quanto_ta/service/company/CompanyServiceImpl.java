@@ -33,7 +33,7 @@ public class CompanyServiceImpl implements CompanyService {
     }
 
     @Override
-    public void saveCompany(NfceCompanyRequestDto nfceCompanyRequestDto) {
+    public long saveCompany(NfceCompanyRequestDto nfceCompanyRequestDto) {
         var company = new Company();
         company.setCnpj(nfceCompanyRequestDto.cnpj());
         company.setName(nfceCompanyRequestDto.name());
@@ -41,6 +41,6 @@ public class CompanyServiceImpl implements CompanyService {
         company.setAddress(nfceCompanyRequestDto.address());
         company.setNumber(nfceCompanyRequestDto.number());
 
-        companyRepository.save(company);
+        return companyRepository.save(company).getId();
     }
 }

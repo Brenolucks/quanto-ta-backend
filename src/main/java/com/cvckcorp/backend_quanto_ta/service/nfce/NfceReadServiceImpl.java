@@ -28,8 +28,8 @@ public class NfceReadServiceImpl implements NfceReadService {
     @Override
     public String registerNfce(NfceRequestDto nfceRequestDto) {
         var company = companyService.saveCompany(nfceRequestDto.nfceCompanyRequestDto());
-        var product = productService.saveProducts(nfceRequestDto.nfceProductRequestDto());
+        var product = productService.saveProducts(nfceRequestDto.nfceProductRequestDto(), company);
 
-        return "Save with success!";
+        return "Save with success! id: " + company + " " + product;
     }
 }

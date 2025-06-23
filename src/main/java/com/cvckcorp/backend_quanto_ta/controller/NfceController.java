@@ -34,7 +34,11 @@ public class NfceController {
 
     @PostMapping("/register-nfce")
     public ResponseEntity<String> registerNfce(@RequestBody NfceRequestDto nfceRequestDto) {
-        var response = nfceReadService.registerNfce(nfceRequestDto);
-        return ResponseEntity.status(HttpStatus.OK).body(response);
+        try {
+            var response = nfceReadService.registerNfce(nfceRequestDto);
+            return ResponseEntity.status(HttpStatus.OK).body(response);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 }

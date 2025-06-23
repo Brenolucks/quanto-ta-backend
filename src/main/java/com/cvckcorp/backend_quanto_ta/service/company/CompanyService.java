@@ -6,5 +6,5 @@ import org.jsoup.nodes.Document;
 
 public interface CompanyService {
     NfceCompanyResponseDto getCompanyFields(Document document);
-    void saveCompany(NfceCompanyRequestDto nfceCompanyRequestDto);
+    long saveCompany(NfceCompanyRequestDto nfceCompanyRequestDto);
 }
