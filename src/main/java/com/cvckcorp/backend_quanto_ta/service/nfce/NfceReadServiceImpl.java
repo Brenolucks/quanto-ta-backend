@@ -2,9 +2,9 @@ package com.cvckcorp.backend_quanto_ta.service.nfce;
 
 import com.cvckcorp.backend_quanto_ta.domain.dto.NfceRequestDto;
 import com.cvckcorp.backend_quanto_ta.domain.dto.NfceResponseDto;
+import com.cvckcorp.backend_quanto_ta.domain.pojo.NfceNfeProcPOJO;
 import com.cvckcorp.backend_quanto_ta.service.company.CompanyServiceImpl;
 import com.cvckcorp.backend_quanto_ta.service.product.ProductServiceImpl;
-import org.jsoup.nodes.Document;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -18,7 +18,7 @@ public class NfceReadServiceImpl implements NfceReadService {
     }
 
     @Override
-    public NfceResponseDto nfceDocumentReaded(Document document) {
+    public NfceResponseDto nfceDocumentReaded(NfceNfeProcPOJO document) {
         var company = companyService.getCompanyFields(document);
         var product = productService.getProductFields(document);
 

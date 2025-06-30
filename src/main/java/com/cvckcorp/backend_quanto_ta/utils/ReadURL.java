@@ -1,23 +1,16 @@
 package com.cvckcorp.backend_quanto_ta.utils;
 
-import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
-import org.jsoup.parser.Parser;
-import org.springframework.http.ResponseEntity;
+import com.cvckcorp.backend_quanto_ta.domain.pojo.NfceNfeProcPOJO;
 import org.springframework.stereotype.Component;
-import org.springframework.web.client.RestTemplate;
+import org.springframework.web.client.RestClient;
 
 @Component
 public class ReadURL {
-    public Document ReadUrlFromLink(String defaultURL) {
-        RestTemplate restTemplate = new RestTemplate();
-        var newURL = "";
-
+    public NfceNfeProcPOJO ReadUrlFromLink(String defaultURL) {
+        String newURL = "";
         if(defaultURL.startsWith("http:")) newURL = defaultURL.replace("http", "https");
         var URL = newURL.isEmpty() ? defaultURL : newURL;
 
-        ResponseEntity<String> xml = restTemplate.getForEntity(URL, String.class);
-
-        return Jsoup.parse(String.valueOf(xml), "", Parser.xmlParser());
+        return RestClient.create().get().uri(URL).retrieve().body(NfceNfeProcPOJO.class);
     }
 }
